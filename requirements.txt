@@ -1,0 +1,6 @@
+transformers
+peft
+bitsandbytes
+pandas
+torch
+xgboost

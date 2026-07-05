@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Data (Kaggle competition data - do not upload)
+data/
+*.csv
+*.parquet
+
+# Model weights
+*.bin
+*.safetensors
+checkpoints/
+
+# Large files / copyright
+*.mp4
+*.avi
+*.mov
+*.pdf
+*.png
+*.jpg
+
+# Packages
+*.whl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

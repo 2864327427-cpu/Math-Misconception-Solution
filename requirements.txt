@@ -1,6 +1,5 @@
-transformers
-peft
-bitsandbytes
-pandas
-torch
-xgboost
+transformers>=4.56.0
+peft>=0.14.0
+bitsandbytes>=0.45.0
+torch>=2.5.0
+pandas>=2.2.0

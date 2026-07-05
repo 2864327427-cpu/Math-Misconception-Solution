@@ -19,8 +19,8 @@
 ├── src/
 │   ├── train.py             # Qwen3 LoRA 微调脚本
 │   ├── inference.py         # 单模型推理（Top-25 logits）
-│   ├── inference_ensemble.py # 三模型加权集成 (4B+8B+14B)
-│   └── inference_script.ipynb # 集成笔记本（家族过滤 + 提交）
+│   ├── inference_script.ipynb # 集成笔记本（家族过滤 + 加权集成 + 提交）
+│   └── train_run.sh           # 训练启动脚本
 ├── requirements.txt         # 依赖
 ├── .gitignore
 └── README.md

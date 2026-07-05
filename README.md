@@ -1,65 +1,65 @@
-# 🏆 Kaggle | MAP - Charting Student Math Misunderstandings
+# 🏆 Kaggle | MAP 学生数学误解识别
 
-This repository contains the core training and inference pipeline for the **Kaggle MAP@3 Student Math Misunderstanding** competition. Our team achieved a Private LB score of **0.946** using an LLM-based end-to-end multi-class classification approach.
+本仓库包含 **Kaggle MAP@3 学生数学误解识别竞赛** 的核心训练与推理流程。我们使用基于 LLM 的端到端多分类方案，取得了 Private LB **0.946** 的成绩。
 
-## 🚀 Key Highlights & Contributions
+## 🚀 核心贡献
 
-As a core algorithm developer in this project, my main contributions focused on **engineering optimization, LLM fine-tuning, and ensemble strategies**:
+作为核心算法开发者，我的主要贡献集中在 **工程优化、LLM 微调与集成策略**：
 
-1. **End-to-End Single Space Modeling:** Replaced the traditional cascaded classification with a unified `Category × Misconception` mapping space using **Qwen3 (4B/8B/14B) + LoRA**.
-2. **Memory-Efficient Fine-Tuning:** Successfully trained 14B models on limited VRAM hardware utilizing **4-bit Quantization (nf4)** via `BitsAndBytes`, combined with `bfloat16` mixed precision and gradient checkpointing.
-3. **Structural Prior (Prompt Engineering):** Designed a `True_/False_family` prefix logic based on statistical distributions of correct MC_Answers, significantly improving the LLM's zero-shot generalization and filtering out illegal predictions during post-processing.
-4. **Consistency-Weighted Ensemble:** Implemented a robust multi-model ensemble algorithm combining Total Probability (0.34) + Consistency Ratio (0.33) + Max Confidence (0.33), boosting the LB score from 0.945 to 0.946.
+1. **端到端统一空间建模**：将传统的级联分类替换为统一的 `Category × Misconception` 映射空间，使用 **Qwen3 (4B/8B/14B) + LoRA**。
+2. **显存高效微调**：利用 `BitsAndBytes` 的 **4-bit 量化 (nf4)**，结合 `bfloat16` 混合精度与梯度检查点，在有限显存硬件上成功训练 14B 模型。
+3. **结构先验（提示工程）**：基于正确答案统计分布设计 `True_/False_family` 前缀逻辑，显著提升了 LLM 的零样本泛化能力，并在后处理中过滤非法预测。
+4. **一致性加权集成**：实现鲁棒的多模型集成算法，组合总概率 (0.34) + 一致性比率 (0.33) + 最大置信度 (0.33)，将 LB 分数从 0.945 提升至 0.946。
 
-## 📂 Repository Structure
+## 📂 仓库结构
 
 ```text
 ├── docs/
-│   └── solution.md          # Full solution report (Chinese)
+│   └── solution.md          # 完整方案报告（中文）
 ├── src/
-│   ├── train.py             # Qwen3 LoRA fine-tuning script
-│   ├── inference.py         # Single model inference (Top-25 logits)
-│   ├── inference_ensemble.py # 3-model weighted ensemble (4B+8B+14B)
-│   ├── inference_script.ipynb # Ensemble notebook (family filter + submission)
-│   └── data_preprocess.py   # True/False family prompt construction
-├── requirements.txt         # Dependencies
+│   ├── train.py             # Qwen3 LoRA 微调脚本
+│   ├── inference.py         # 单模型推理（Top-25 logits）
+│   ├── inference_ensemble.py # 三模型加权集成 (4B+8B+14B)
+│   ├── inference_script.ipynb # 集成笔记本（家族过滤 + 提交）
+│   └── data_preprocess.py   # True/False 家族前缀构建
+├── requirements.txt         # 依赖
 ├── .gitignore
 └── README.md
 ```
 
-## ⚙️ How to Run
+## ⚙️ 运行方式
 
-### 1. Install Dependencies
+### 1. 安装依赖
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Data Preparation
+### 2. 数据准备
 
-Download competition data from [Kaggle MAP](https://kaggle.com/competitions/map-charting-student-math-misunderstandings) and place CSVs in `data/` directory.
+从 [Kaggle MAP](https://kaggle.com/competitions/map-charting-student-math-misunderstandings) 下载竞赛数据，将 CSV 文件放入 `data/` 目录。
 
-### 3. Model Training (Example for Qwen3-8B)
+### 3. 模型训练（以 Qwen3-8B 为例）
 
 ```bash
 python src/train.py --model_name "Qwen/Qwen3-8B" --quantization "4bit" --batch_size 8
 ```
 
-### 4. Single Model Inference
+### 4. 单模型推理
 
 ```bash
 python src/inference.py --model_path ./output --test_data ./data/test.csv
 ```
 
-### 5. Ensemble & Submit
+### 5. 集成与提交
 
-Run `src/inference_script.ipynb` in Jupyter/Kaggle Notebook to ensemble 4B+8B+14B predictions and generate submission file.
+在 Jupyter/Kaggle Notebook 中运行 `src/inference_script.ipynb`，集成 4B+8B+14B 预测结果并生成提交文件。
 
-Or use the CLI ensemble:
+或使用命令行集成：
 ```bash
 python src/inference_ensemble.py --weights "4b,8b,14b"
 ```
 
-## 🛠 Tech Stack
+## 🛠 技术栈
 
 Python | PyTorch | Transformers | PEFT/LoRA | BitsAndBytes | Pandas
